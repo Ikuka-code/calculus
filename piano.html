@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鋼琴 × 宮商角徵羽對照｜數理 × 樂韻</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="piano-page" data-theme="china">
+  <!-- 頂部控制列 -->
+  <header class="piano-topbar">
+    <div class="piano-topbar-left">
+      <a id="back-to-stage" href="stage.html?culture=china" class="stage-pill">← 返回舞台</a>
+      <button id="piano-play-btn" class="stage-pill primary">▶ 演奏曲目</button>
+      <button id="piano-assist-btn" class="stage-pill assist-btn active-mode" aria-pressed="true">🎯 量化吸附：開 (240 BPM)</button>
+      <button id="sound-toggle-btn" class="stage-pill sound-pill">🎹 音色：鋼琴</button>
+    </div>
+
+    <div class="piano-culture-tabs" aria-label="切換對應國家音階">
+      <button class="p-tab active" data-culture="china">中國・黑鍵五聲</button>
+      <button class="p-tab" data-culture="japan">日本・都節音階</button>
+      <button class="p-tab" data-culture="arabia">阿拉伯・希賈茲</button>
+    </div>
+  </header>
+
+  <!-- 主內容：上半部為擬真互動鋼琴＋量化吸附設定與軌道，下半部為宮商角徵羽音階鍵盤 -->
+  <main class="piano-workspace">
+    <section class="piano-deck">
+      <div class="piano-header-bar">
+        <div class="piano-title-group">
+          <span class="piano-badge" id="piano-culture-badge">中國五聲音階（全黑鍵 F# 宮調式）× 十二平均律鋼琴</span>
+          <h1 id="piano-song-title">鋼琴全黑鍵與「宮商角徵羽」同步對照</h1>
+        </div>
+        <div class="piano-live-readout" id="piano-live-readout">
+          <span id="piano-beat-dot" class="beat-pulse-dot"></span>
+          <span class="readout-art assist" id="readout-art">🎯 量化就緒</span>
+          <span class="readout-note" id="readout-note">—</span>
+          <span class="readout-detail" id="readout-detail">輕點為短音、按住為長音；|t_input − t_beat| ≤ snapWindow 自動對齊拍點</span>
+        </div>
+      </div>
+
+      <!-- 節拍量化吸附控制列（自訂拍子 BPM、吸附容錯 snapWindow、節拍聲、錄製打譜／量化回放） -->
+      <div class="quantize-toolbar" aria-label="節拍量化吸附設定列">
+        <div class="qt-group">
+          <span class="qt-title">拍子 BPM</span>
+          <button id="piano-bpm-dec" class="qt-step-btn" type="button" aria-label="降低 BPM">−</button>
+          <input type="range" id="piano-bpm-slider" min="60" max="240" step="2" value="240">
+          <button id="piano-bpm-inc" class="qt-step-btn" type="button" aria-label="提高 BPM">+</button>
+          <strong id="piano-bpm-val" class="qt-num">240</strong>
+          <span id="piano-period-hint" class="qt-sub">250ms/拍</span>
+        </div>
+
+        <div class="qt-group">
+          <span class="qt-title">吸附容錯</span>
+          <div class="qp-preset-chips">
+            <button class="qp-chip win-preset" data-win="60">±60ms</button>
+            <button class="qp-chip win-preset active" data-win="80">±80ms</button>
+            <button class="qp-chip win-preset" data-win="100">±100ms</button>
+            <button class="qp-chip win-preset" data-win="120">±120ms</button>
+          </div>
+          <span id="piano-win-cap" class="qt-sub"></span>
+        </div>
+
+        <div class="qt-group qt-rec-group">
+          <button id="piano-metro-btn" class="qp-action-btn">🔔 節拍聲：關</button>
+          <button id="piano-rec-btn" class="qp-action-btn rec">⏺ 錄製打譜</button>
+          <button id="piano-replay-btn" class="qp-action-btn" disabled>▶ 量化回放 (0)</button>
+          <button id="piano-clear-rec-btn" class="qp-action-btn" disabled>清除</button>
+        </div>
+      </div>
+
+      <!-- 按壓時長與量化拍點即時視覺軌 -->
+      <div class="rhythm-strip" aria-label="按壓時長與量化拍點視覺列">
+        <div class="rhythm-strip-label">
+          <span id="rhythm-strip-title">節拍量化吸附即時軌（|t_input − t_beat| ≤ ±80ms 自動對齊拍點・超出則提示偏拍）</span>
+          <div class="rhythm-legend">
+            <span class="r-chip short">⚡ 短按（&lt;240ms）</span>
+            <span class="r-chip long">〰 長按（持續延音）</span>
+            <span class="r-chip assist">🎯 已吸附 t_beat</span>
+            <span class="r-chip offbeat">⚠ 偏拍未吸附</span>
+          </div>
+        </div>
+        <div id="rhythm-track" class="rhythm-track">
+          <span class="rhythm-placeholder">輕點琴鍵聽「短音」，按住琴鍵聽「長音」；調整上方 BPM 與吸附容錯，並可按「⏺ 錄製打譜」體驗量化對拍回放</span>
+        </div>
+      </div>
+
+      <!-- 擬真平台鋼琴（A3 ~ B5，完整涵蓋中國全黑鍵 F#4~A#5 與日本、阿拉伯音域） -->
+      <div class="piano-casing">
+        <div class="piano-felt-strip"></div>
+        <div class="piano-keys-scroll" id="piano-keys-scroll">
+          <div id="piano-keys" class="piano-keys" aria-label="互動鋼琴鍵盤"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下半部：宮商角徵羽（或對應國家音階）大鍵盤 -->
+    <section class="piano-scale-panel">
+      <div class="scale-panel-head">
+        <span id="scale-panel-title">下方傳統音階鍵盤：宮商角徵羽（對應鋼琴全黑鍵 F#4–A#5｜輕點短音、長按長音）</span>
+        <span class="scale-legend"><i class="legend-dot"></i> 支援滑鼠／觸控長短按與鍵盤數字鍵 1–8 長短按</span>
+      </div>
+      <div id="piano-scale-keyboard" class="stage-keyboard" aria-label="宮商角徵羽音階鍵盤"></div>
+    </section>
+  </main>
+
+  <script src="audio-engine.js"></script>
+  <script src="piano.js"></script>
+</body>
+</html>

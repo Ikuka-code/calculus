@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>數理 × 樂韻｜跨文化音律互動展演</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="lobby-page">
+  <header class="navbar">
+    <div class="logo"><span class="logo-dot"></span>數理 × 樂韻 <span class="logo-en">Math &amp; Humanities</span></div>
+    <nav class="nav-pill-group">
+      <a href="index.html" class="nav-pill active">跨文化演奏廳</a>
+      <a href="piano.html?culture=china" class="nav-pill">鋼琴 × 五聲對照</a>
+      <a href="theory.html" class="nav-pill">數理樂理互動影片</a>
+    </nav>
+  </header>
+
+  <main class="lobby-container">
+    <section class="lobby-hero">
+      <h1>選擇文明，步入全景演奏舞台</h1>
+      <p>點擊任一國家卡片，進入該國實景舞台觀賞樂師動態演奏，並可切換至鋼琴對照介面體驗「宮商角徵羽」與十二平均律的數理關係。</p>
+    </section>
+
+    <section class="country-grid" aria-label="選擇國家進入演奏舞台">
+      <a href="stage.html?culture=china" class="country-card" data-culture="china">
+        <div class="card-canvas-wrap">
+          <canvas class="preview-canvas" data-culture="china" width="600" height="400"></canvas>
+          <span class="enter-tag">進入舞台 ▶</span>
+        </div>
+        <div class="card-body">
+          <span class="country-badge china">中國・古箏</span>
+          <h2>宮商角徵羽</h2>
+          <p>五聲音階・三分損益法（純五度 3:2）｜演奏《茉莉花》</p>
+        </div>
+      </a>
+
+      <a href="stage.html?culture=japan" class="country-card" data-culture="japan">
+        <div class="card-canvas-wrap">
+          <canvas class="preview-canvas" data-culture="japan" width="600" height="400"></canvas>
+          <span class="enter-tag">進入舞台 ▶</span>
+        </div>
+        <div class="card-body">
+          <span class="country-badge japan">日本・十三弦箏</span>
+          <h2>都節音階</h2>
+          <p>陰旋法・小二度幽玄美學（1-4-2-1-4）｜演奏《櫻花》</p>
+        </div>
+      </a>
+
+      <a href="stage.html?culture=arabia" class="country-card" data-culture="arabia">
+        <div class="card-canvas-wrap">
+          <canvas class="preview-canvas" data-culture="arabia" width="600" height="400"></canvas>
+          <span class="enter-tag">進入舞台 ▶</span>
+        </div>
+        <div class="card-body">
+          <span class="country-badge arabia">阿拉伯・烏德琴</span>
+          <h2>希賈茲調式</h2>
+          <p>Maqam Hijaz・增二度張力與四分音｜演奏《沙漠迴響》</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <script src="audio-engine.js"></script>
+  <script src="scenery-renderer.js"></script>
+  <script>
+    document.querySelectorAll(".preview-canvas").forEach((canvas) => {
+      const culture = canvas.dataset.culture;
+      const renderer = new window.SceneryRenderer(canvas, culture, true);
+      renderer.start();
+    });
+  </script>
+</body>
+</html>

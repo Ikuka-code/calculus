@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>數理樂理互動影片｜數理 × 樂韻</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theory-page">
+  <header class="navbar">
+    <div class="logo"><span class="logo-dot"></span>數理 × 樂韻 <span class="logo-en">Math &amp; Humanities</span></div>
+    <nav class="nav-pill-group">
+      <a href="index.html" class="nav-pill">跨文化演奏廳</a>
+      <a href="piano.html?culture=china" class="nav-pill">鋼琴 × 五聲對照</a>
+      <a href="theory.html" class="nav-pill active">數理樂理互動影片</a>
+    </nav>
+  </header>
+
+  <main class="theory-container">
+    <div class="chapter-header">
+      <div class="chapter-steps" id="chapter-steps">
+        <button class="step-pill active" data-chapter="0">1. 正弦波模型</button>
+        <button class="step-pill" data-chapter="1">2. 三分損益法</button>
+        <button class="step-pill" data-chapter="2">3. 跨國音律比例</button>
+        <button class="step-pill" data-chapter="3">4. 傅立葉泛音</button>
+      </div>
+      <div class="score-badge" id="score-badge">隨堂考驗：0 / 4</div>
+    </div>
+
+    <section class="cinema-card">
+      <div class="video-viewport">
+        <canvas id="theory-canvas" width="960" height="540"></canvas>
+
+        <div id="video-subtitle" class="video-subtitle">點擊「開始播放動態影片」進入數理樂理動畫與隨堂挑戰</div>
+
+        <div id="start-overlay" class="video-overlay">
+          <div class="overlay-box">
+            <span class="overlay-tag">動態數理樂理影片</span>
+            <h1>用數學看見音樂的波形與比例</h1>
+            <p>共 4 個動態視覺章節，包含即時波形動畫與真實音律示範；每介紹完一個觀念就會暫停並跳出選擇題考驗，答對後自動延續下一章！</p>
+            <button id="start-course-btn" class="btn-gold">▶ 開始播放動態影片</button>
+          </div>
+        </div>
+
+        <div id="quiz-overlay" class="video-overlay hidden">
+          <div class="quiz-box">
+            <div class="quiz-meta">
+              <span id="quiz-tag" class="overlay-tag">章節考驗</span>
+              <span id="quiz-chapter-name" class="quiz-chapter-label"></span>
+            </div>
+            <h2 id="quiz-question" class="quiz-question"></h2>
+            <div id="quiz-options" class="quiz-options"></div>
+            <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+            <div class="quiz-actions">
+              <button id="quiz-replay-btn" class="btn-ghost">↺ 重看本章動畫</button>
+              <button id="quiz-next-btn" class="btn-gold hidden">繼續下一章 ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="complete-overlay" class="video-overlay hidden">
+          <div class="overlay-box">
+            <span class="overlay-tag">課程通關</span>
+            <h1>恭喜完成所有數理樂理考驗！</h1>
+            <p id="complete-summary"></p>
+            <div class="complete-actions">
+              <button id="restart-all-btn" class="btn-ghost">↺ 從頭重看影片</button>
+              <a href="index.html" class="btn-gold">回到跨文化演奏廳 ▶</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-controls">
+        <button id="play-pause-btn" class="ctrl-btn">▶ 播放</button>
+        <button id="replay-chapter-btn" class="ctrl-btn">↺ 重播本章</button>
+        <div class="timeline-wrap">
+          <div class="timeline-track">
+            <div id="timeline-fill" class="timeline-fill"></div>
+          </div>
+          <span id="time-readout" class="time-readout">00:00 / 00:12</span>
+        </div>
+        <button id="mute-btn" class="ctrl-btn">🔊 音效開</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="audio-engine.js"></script>
+  <script src="theory-video.js"></script>
+</body>
+</html>

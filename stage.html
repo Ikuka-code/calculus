@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演奏舞台｜數理 × 樂韻</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="stage-page" data-theme="china">
+  <!-- 全視窗高精緻插畫動態風景與演奏人物 -->
+  <canvas id="stage-canvas"></canvas>
+
+  <!-- 左上角膠囊按鈕群 -->
+  <div class="stage-controls">
+    <a href="index.html" class="stage-pill">← 返回</a>
+    <button id="stage-play-btn" class="stage-pill primary">▶ 演奏曲目</button>
+    <a id="stage-piano-link" href="piano.html?culture=china" class="stage-pill piano-btn">🎹 鋼琴對照</a>
+    <button id="stage-assist-btn" class="stage-pill assist-btn active-mode" aria-pressed="true">🎯 量化吸附：開 (240 BPM)</button>
+    <button id="stage-settings-btn" class="stage-pill settings-btn" aria-expanded="false">⚙ 拍子／錄製</button>
+  </div>
+
+  <!-- 可收合毛玻璃設定面板：調整 BPM、吸附容錯 snapWindow、節拍聲與錄製打譜 -->
+  <aside id="stage-quantize-panel" class="stage-quantize-panel hidden" aria-label="節拍量化吸附設定">
+    <div class="qp-row">
+      <label class="qp-label">拍子 BPM：<strong id="stage-bpm-val">240</strong> <small id="stage-period-info">(每拍 250ms)</small></label>
+      <div class="qp-bpm-controls">
+        <input type="range" id="stage-bpm-slider" min="60" max="240" step="2" value="240">
+        <div class="qp-preset-chips">
+          <button class="qp-chip bpm-preset" data-bpm="80">80</button>
+          <button class="qp-chip bpm-preset" data-bpm="120">120</button>
+          <button class="qp-chip bpm-preset" data-bpm="180">180</button>
+          <button class="qp-chip bpm-preset" data-bpm="240">240</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="qp-row">
+      <label class="qp-label">吸附容錯 snapWindow：<strong id="stage-win-val">±80 ms</strong> <small id="stage-win-cap"></small></label>
+      <div class="qp-preset-chips">
+        <button class="qp-chip win-preset" data-win="60">±60ms</button>
+        <button class="qp-chip win-preset active" data-win="80">±80ms</button>
+        <button class="qp-chip win-preset" data-win="100">±100ms</button>
+        <button class="qp-chip win-preset" data-win="120">±120ms</button>
+      </div>
+    </div>
+
+    <div class="qp-row qp-actions-row">
+      <button id="stage-metro-btn" class="qp-action-btn">🔔 節拍聲：關</button>
+      <button id="stage-rec-btn" class="qp-action-btn rec">⏺ 錄製打譜</button>
+      <button id="stage-replay-btn" class="qp-action-btn" disabled>▶ 量化回放 (0)</button>
+      <button id="stage-clear-rec-btn" class="qp-action-btn" disabled>清除</button>
+    </div>
+    <div id="stage-rec-status" class="qp-status">提示：若 |t_input − t_beat| ≤ snapWindow，將自動對齊至拍點 t_beat。</div>
+  </aside>
+
+  <!-- 極簡浮動回饋條 -->
+  <div id="stage-beat-hud" class="stage-beat-hud hidden" aria-live="polite">
+    <span id="stage-beat-dot" class="beat-pulse-dot"></span>
+    <span id="stage-beat-text">節拍量化吸附就緒</span>
+  </div>
+
+  <!-- 底部經典毛玻璃彩色頂條音階鍵盤（宮商角徵羽等，支援長按／短按感測） -->
+  <div class="stage-keyboard-dock" id="stage-keyboard-dock">
+    <div id="stage-keyboard" class="stage-keyboard" aria-label="互動音階鍵盤"></div>
+  </div>
+
+  <script src="audio-engine.js"></script>
+  <script src="scenery-renderer.js"></script>
+  <script src="stage.js"></script>
+</body>
+</html>

@@ -1,0 +1,1877 @@
+:root {
+  --bg-dark: #0f1724;
+  --surface: #172233;
+  --surface-2: #203047;
+  --border: rgba(255, 255, 255, 0.14);
+  --text: #f3f7fc;
+  --muted: #a9b8cf;
+  --gold: #eab954;
+  --gold-hover: #f7cc70;
+  --china: #2d8f82;
+  --japan: #de7396;
+  --arabia: #2aa88b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  background: radial-gradient(circle at top, #1d3247 0%, var(--bg-dark) 68%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ===== 頂部導覽列（大廳與樂理頁） ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.8rem;
+  background: rgba(15, 23, 36, 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f4f8fc;
+  white-space: nowrap;
+}
+
+.logo-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #2b8a84;
+  box-shadow: 0 0 10px rgba(43, 138, 132, 0.75);
+}
+
+.logo-en {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.nav-pill-group {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  flex-wrap: wrap;
+}
+
+.nav-pill {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0.42rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.nav-pill:hover {
+  color: #fff;
+}
+
+.nav-pill.active {
+  background: var(--gold);
+  color: #161d28;
+}
+
+/* ===== 主頁：國家選擇大廳 ===== */
+.lobby-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.2rem 1.4rem 3.2rem;
+}
+
+.lobby-hero {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+.lobby-hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.55rem;
+  letter-spacing: 0.04em;
+}
+
+.lobby-hero p {
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 0.98rem;
+}
+
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.country-card {
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+}
+
+.country-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: 0 20px 44px rgba(234, 185, 84, 0.24);
+}
+
+.card-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.preview-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.enter-tag {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  background: rgba(15, 23, 36, 0.78);
+  color: var(--gold);
+  border: 1px solid rgba(234, 185, 84, 0.6);
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.card-body {
+  padding: 1.2rem 1.3rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.country-badge {
+  align-self: flex-start;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.country-badge.china { background: var(--china); }
+.country-badge.japan { background: var(--japan); }
+.country-badge.arabia { background: var(--arabia); }
+
+.card-body h2 {
+  font-size: 1.32rem;
+}
+
+.card-body p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ===== 獨立演奏舞台 ===== */
+.stage-page {
+  overflow: hidden;
+  width: 100vw;
+  height: 100dvh;
+  background: #a9dbd2;
+}
+
+#stage-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  display: block;
+}
+
+/* 左上角膠囊按鈕群（← 返回、▶ 演奏曲目、🎹 鋼琴對照） */
+.stage-controls {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stage-pill {
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.68);
+  background: rgba(74, 98, 108, 0.78);
+  color: #ffffff;
+  padding: 0.54rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(15, 25, 32, 0.2);
+  transition: transform 0.16s ease, background 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stage-pill:hover {
+  background: rgba(46, 66, 76, 0.92);
+  transform: translateY(-1px);
+}
+
+.stage-pill.primary {
+  background: rgba(232, 189, 89, 0.96);
+  color: #181c24;
+  border-color: rgba(255, 245, 214, 0.94);
+  box-shadow: 0 4px 16px rgba(206, 152, 42, 0.34);
+}
+
+.stage-pill.primary:hover {
+  background: #f5cd6d;
+}
+
+.stage-pill.primary.playing {
+  background: linear-gradient(135deg, #f8d477 0%, #e09f34 100%);
+  box-shadow: 0 0 0 3px rgba(255, 242, 198, 0.65), 0 6px 20px rgba(224, 159, 52, 0.45);
+}
+
+.stage-pill.piano-btn {
+  background: rgba(26, 40, 58, 0.84);
+  color: #fff6dc;
+  border-color: rgba(255, 232, 174, 0.85);
+}
+
+.stage-pill.piano-btn:hover {
+  background: rgba(18, 28, 44, 0.96);
+  box-shadow: 0 4px 18px rgba(20, 32, 52, 0.36);
+}
+
+.stage-pill.sound-pill {
+  background: rgba(34, 52, 74, 0.85);
+  color: #e8f1fc;
+}
+
+/* 底部經典毛玻璃琴鍵區 */
+.stage-keyboard-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  padding: 0.78rem 1.15rem 0.95rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(12px);
+}
+
+body[data-theme="china"] .stage-keyboard-dock {
+  background: linear-gradient(180deg, rgba(60, 142, 134, 0.68) 0%, rgba(30, 88, 84, 0.88) 100%);
+}
+
+body[data-theme="japan"] .stage-keyboard-dock {
+  background: linear-gradient(180deg, rgba(68, 128, 192, 0.68) 0%, rgba(34, 80, 142, 0.88) 100%);
+}
+
+body[data-theme="arabia"] .stage-keyboard-dock {
+  background: linear-gradient(180deg, rgba(132, 122, 82, 0.68) 0%, rgba(96, 72, 40, 0.88) 100%);
+}
+
+.stage-keyboard {
+  width: 100%;
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: repeat(var(--key-count, 8), minmax(0, 1fr));
+  gap: 0.68rem;
+}
+
+.stage-key {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  border-radius: 15px;
+  padding: 0.76rem 0.32rem 0.62rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  user-select: none;
+  color: #10242c;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1),
+              background 0.15s ease,
+              box-shadow 0.15s ease,
+              border-color 0.15s ease,
+              opacity 0.2s ease;
+}
+
+.stage-keyboard.is-playing .stage-key:not(.active) {
+  opacity: 0.74;
+}
+
+.stage-key::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+}
+
+body[data-theme="china"] .stage-key::before {
+  background: linear-gradient(90deg, #e5b74e, #f7d982, #d89b32);
+}
+
+body[data-theme="japan"] .stage-key::before {
+  background: linear-gradient(90deg, #f399b9, #ffd1e2, #e0769e);
+}
+
+body[data-theme="arabia"] .stage-key::before {
+  background: linear-gradient(90deg, #32b896, #f0c259, #289e80);
+}
+
+.stage-key:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.62);
+  opacity: 1 !important;
+}
+
+@keyframes keyPulse {
+  0% { transform: translateY(-8px) scale(1.06); }
+  100% { transform: translateY(-4px) scale(1.03); }
+}
+
+.stage-key.active {
+  z-index: 5;
+  opacity: 1 !important;
+  animation: keyPulse 0.18s ease-out forwards;
+}
+
+body[data-theme="china"] .stage-key.active {
+  background: linear-gradient(180deg, #fff1b8 0%, #f3be49 52%, #e09a24 100%);
+  border-color: #ffffff;
+  color: #241500;
+  box-shadow: 0 0 0 3px rgba(255, 248, 214, 0.92), 0 10px 26px rgba(247, 195, 68, 0.92);
+}
+
+body[data-theme="japan"] .stage-key.active {
+  background: linear-gradient(180deg, #ffeaf3 0%, #f59ec0 52%, #e06b98 100%);
+  border-color: #ffffff;
+  color: #32091a;
+  box-shadow: 0 0 0 3px rgba(255, 232, 242, 0.92), 0 10px 26px rgba(242, 126, 172, 0.92);
+}
+
+body[data-theme="arabia"] .stage-key.active {
+  background: linear-gradient(180deg, #8af3d6 0%, #2fc49f 55%, #16866b 100%);
+  border-color: #ffffff;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 45, 35, 0.45);
+  box-shadow: 0 0 0 3px rgba(215, 255, 244, 0.92), 0 10px 26px rgba(56, 214, 172, 0.92);
+}
+
+.stage-key .k-name {
+  font-size: clamp(0.98rem, 1.75vw, 1.42rem);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.stage-key .k-name.long-name {
+  font-size: clamp(0.75rem, 1.3vw, 1.12rem);
+}
+
+.stage-key .k-pitch {
+  font-size: clamp(0.64rem, 0.9vw, 0.8rem);
+  font-weight: 700;
+  opacity: 0.92;
+  font-family: "Consolas", monospace;
+  white-space: nowrap;
+}
+
+.stage-key .k-ratio {
+  font-size: clamp(0.62rem, 0.88vw, 0.78rem);
+  font-weight: 700;
+  opacity: 0.88;
+  font-family: "Consolas", monospace;
+}
+
+/* =====================================================================
+   全新頁面：鋼琴 × 宮商角徵羽同步對照工作台 (piano.html)
+   ===================================================================== */
+.piano-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.35s ease;
+}
+
+body.piano-page[data-theme="china"] {
+  background: radial-gradient(circle at 50% 0%, #235754 0%, #102429 58%, #0b161b 100%);
+}
+
+body.piano-page[data-theme="japan"] {
+  background: radial-gradient(circle at 50% 0%, #2e4e82 0%, #162440 58%, #0e1629 100%);
+}
+
+body.piano-page[data-theme="arabia"] {
+  background: radial-gradient(circle at 50% 0%, #1f5c52 0%, #26231a 58%, #15120d 100%);
+}
+
+.piano-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 0.9rem 1.5rem;
+  background: rgba(11, 18, 28, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+}
+
+.piano-topbar-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.piano-culture-tabs {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.p-tab {
+  border: none;
+  background: transparent;
+  color: #cbd7ea;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.p-tab:hover {
+  color: #ffffff;
+}
+
+.p-tab.active {
+  background: var(--gold);
+  color: #161c26;
+}
+
+.piano-workspace {
+  flex: 1;
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1.35rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+/* 上半部：鋼琴座台 */
+.piano-deck {
+  background: rgba(15, 23, 35, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  padding: 1.25rem 1.35rem 1.4rem;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.piano-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.piano-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.22rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(234, 185, 84, 0.18);
+  color: #f8d47c;
+  border: 1px solid rgba(234, 185, 84, 0.45);
+  margin-bottom: 0.35rem;
+}
+
+.piano-title-group h1 {
+  font-size: 1.38rem;
+  color: #f7fafd;
+  letter-spacing: 0.02em;
+}
+
+.piano-live-readout {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.55rem 1rem;
+  border-radius: 14px;
+}
+
+.readout-note {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--gold);
+  min-width: 60px;
+  text-align: center;
+}
+
+.readout-detail {
+  font-size: 0.86rem;
+  color: #d6e1f2;
+}
+
+/* 擬真三角鋼琴木質琴身與紅色絨布條 */
+.piano-casing {
+  background: linear-gradient(180deg, #272220 0%, #151211 100%);
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 14px 14px 16px;
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.7), 0 12px 26px rgba(0, 0, 0, 0.36);
+}
+
+.piano-felt-strip {
+  height: 7px;
+  background: linear-gradient(90deg, #7c1722, #b82534, #7c1722);
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.piano-keys-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.piano-keys {
+  position: relative;
+  display: flex;
+  height: 250px;
+  min-width: 740px;
+  user-select: none;
+}
+
+/* 白鍵 */
+.piano-white-key {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(180deg, #f8f9fb 0%, #ffffff 74%, #e5e8ef 100%);
+  border: 1px solid #aeb7c6;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 12px;
+  gap: 5px;
+  box-shadow: inset 0 -5px 0 #ced5e0, 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.06s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.piano-white-key:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #fffdf5 80%, #f1ead6 100%);
+}
+
+.piano-white-key.active {
+  transform: translateY(3px);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2), 0 0 20px rgba(244, 195, 76, 0.8);
+}
+
+body.piano-page[data-theme="china"] .piano-white-key.active {
+  background: linear-gradient(180deg, #fff2c2 0%, #f5c24e 100%);
+}
+
+body.piano-page[data-theme="japan"] .piano-white-key.active {
+  background: linear-gradient(180deg, #ffe7f1 0%, #f28fb6 100%);
+}
+
+body.piano-page[data-theme="arabia"] .piano-white-key.active {
+  background: linear-gradient(180deg, #c6faea 0%, #34c29d 100%);
+}
+
+.pk-scale-tag {
+  font-size: 0.92rem;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 999px;
+  line-height: 1.2;
+}
+
+body.piano-page[data-theme="china"] .pk-scale-tag {
+  background: rgba(234, 185, 84, 0.28);
+  color: #6b4602;
+  border: 1px solid rgba(212, 148, 28, 0.65);
+}
+
+body.piano-page[data-theme="japan"] .pk-scale-tag {
+  background: rgba(239, 141, 178, 0.28);
+  color: #781c40;
+  border: 1px solid rgba(216, 98, 142, 0.65);
+}
+
+body.piano-page[data-theme="arabia"] .pk-scale-tag {
+  background: rgba(50, 196, 159, 0.24);
+  color: #0b5745;
+  border: 1px solid rgba(36, 166, 132, 0.65);
+}
+
+.pk-note-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #5b677a;
+  font-family: "Consolas", monospace;
+}
+
+/* 黑鍵 */
+.piano-black-key {
+  position: absolute;
+  top: 0;
+  width: 4.9%;
+  height: 61%;
+  transform: translateX(-50%);
+  z-index: 6;
+  background: linear-gradient(180deg, #3c424d 0%, #1c2026 70%, #0f1216 100%);
+  border: 1px solid #090b0e;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 9px;
+  gap: 4px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.52), inset 0 -4px 0 #07080a;
+  transition: transform 0.06s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.piano-black-key:hover {
+  background: linear-gradient(180deg, #4f5766 0%, #262b33 75%, #16191f 100%);
+}
+
+.piano-black-key.active {
+  transform: translateX(-50%) translateY(3px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), 0 0 18px rgba(56, 214, 172, 0.88);
+}
+
+body.piano-page[data-theme="china"] .piano-black-key.active {
+  background: linear-gradient(180deg, #f3be49 0%, #c98617 100%);
+}
+
+body.piano-page[data-theme="japan"] .piano-black-key.active {
+  background: linear-gradient(180deg, #f28fb6 0%, #c9507f 100%);
+}
+
+body.piano-page[data-theme="arabia"] .piano-black-key.active {
+  background: linear-gradient(180deg, #49dbb4 0%, #158266 100%);
+}
+
+.piano-black-key .pk-scale-tag {
+  font-size: 0.68rem;
+  padding: 1px 4px;
+  background: rgba(50, 196, 159, 0.9);
+  color: #ffffff;
+  border-color: rgba(215, 255, 244, 0.9);
+}
+
+.piano-black-key .pk-note-label {
+  font-size: 0.66rem;
+  color: #b7c2d4;
+}
+
+/* 下半部：宮商角徵羽音階面板 */
+.piano-scale-panel {
+  border-radius: 20px;
+  padding: 1rem 1.25rem 1.2rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34);
+}
+
+body.piano-page[data-theme="china"] .piano-scale-panel {
+  background: linear-gradient(180deg, rgba(46, 118, 112, 0.72) 0%, rgba(24, 72, 70, 0.9) 100%);
+}
+
+body.piano-page[data-theme="japan"] .piano-scale-panel {
+  background: linear-gradient(180deg, rgba(58, 108, 168, 0.72) 0%, rgba(28, 64, 118, 0.9) 100%);
+}
+
+body.piano-page[data-theme="arabia"] .piano-scale-panel {
+  background: linear-gradient(180deg, rgba(114, 104, 68, 0.72) 0%, rgba(78, 58, 32, 0.9) 100%);
+}
+
+.scale-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f3f7fc;
+}
+
+.scale-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+body.piano-page[data-theme="japan"] .legend-dot { background: #f399b9; }
+body.piano-page[data-theme="arabia"] .legend-dot { background: #32c49f; }
+
+.piano-scale-panel .stage-keyboard {
+  max-width: 100%;
+}
+
+/* ===== 樂理頁：動態教學影片與隨堂考驗 ===== */
+.theory-container {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 1.4rem 1.2rem 2.6rem;
+}
+
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.chapter-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.step-pill {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.step-pill:hover {
+  border-color: var(--gold);
+  color: var(--text);
+}
+
+.step-pill.active {
+  background: var(--gold);
+  color: #151a24;
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+.step-pill.done::after {
+  content: " ✓";
+  color: #5ee6a8;
+  font-weight: 700;
+}
+
+.step-pill.active.done::after {
+  color: #0e4a2f;
+}
+
+.score-badge {
+  background: var(--surface-2);
+  border: 1px solid rgba(234, 185, 84, 0.45);
+  color: var(--gold);
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.cinema-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
+}
+
+.video-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0b101a;
+  overflow: hidden;
+}
+
+#theory-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.video-subtitle {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(90%, 780px);
+  text-align: center;
+  background: rgba(10, 14, 24, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f7f9fd;
+  padding: 0.65rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 25, 0.84);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  z-index: 10;
+}
+
+.video-overlay.hidden {
+  display: none;
+}
+
+.overlay-box,
+.quiz-box {
+  background: #161f30;
+  border: 1px solid rgba(234, 185, 84, 0.42);
+  border-radius: 16px;
+  padding: 1.7rem 1.9rem;
+  width: min(100%, 640px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.overlay-box {
+  text-align: center;
+}
+
+.overlay-box h1 {
+  font-size: 1.55rem;
+  margin: 0.7rem 0 0.65rem;
+}
+
+.overlay-box p {
+  color: var(--muted);
+  margin-bottom: 1.35rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.overlay-tag {
+  display: inline-block;
+  background: rgba(234, 185, 84, 0.18);
+  color: var(--gold);
+  border: 1px solid rgba(234, 185, 84, 0.45);
+  padding: 0.22rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.quiz-chapter-label {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.quiz-question {
+  font-size: 1.12rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.quiz-option-btn {
+  text-align: left;
+  background: #1e2a40;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: #273652;
+}
+
+.quiz-option-btn.correct {
+  background: rgba(45, 168, 114, 0.28);
+  border-color: #4de09d;
+  color: #dcffef;
+}
+
+.quiz-option-btn.wrong {
+  background: rgba(220, 76, 86, 0.25);
+  border-color: #f06e77;
+  color: #ffe2e4;
+}
+
+.quiz-feedback {
+  margin-top: 0.85rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--gold);
+}
+
+.quiz-feedback.hidden {
+  display: none;
+}
+
+.quiz-actions,
+.complete-actions {
+  margin-top: 1.1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.complete-actions {
+  justify-content: center;
+}
+
+.btn-gold,
+.btn-ghost {
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.93rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #141923;
+}
+
+.btn-gold:hover {
+  background: var(--gold-hover);
+}
+
+.btn-gold.hidden {
+  display: none;
+}
+
+.btn-ghost {
+  background: #26334c;
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  background: #324363;
+}
+
+.video-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1.15rem;
+  background: #121a28;
+  border-top: 1px solid var(--border);
+}
+
+.ctrl-btn {
+  background: #222f46;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.86rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ctrl-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.timeline-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.timeline-track {
+  flex: 1;
+  height: 8px;
+  background: #24314a;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.timeline-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #eab954, #ffe394);
+  transition: width 0.08s linear;
+}
+
+.time-readout {
+  font-family: "Consolas", monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ===== 響應式適配 ===== */
+@media (max-width: 820px) {
+  .country-grid {
+    grid-template-columns: 1fr;
+  }
+  .stage-keyboard-dock {
+    padding: 0.72rem 0.65rem 0.85rem;
+  }
+  .stage-keyboard {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.48rem;
+  }
+  .stage-key {
+    padding: 0.68rem 0.2rem 0.55rem;
+    border-radius: 14px;
+  }
+  .stage-key .k-name {
+    font-size: clamp(0.92rem, 3.5vw, 1.18rem);
+  }
+  .stage-key .k-name.long-name {
+    font-size: clamp(0.74rem, 2.7vw, 0.94rem);
+  }
+  .piano-keys {
+    height: 205px;
+  }
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+  .logo-en {
+    display: none;
+  }
+  .stage-controls {
+    top: 12px;
+    left: 12px;
+    gap: 7px;
+  }
+  .stage-pill {
+    padding: 0.45rem 0.86rem;
+    font-size: 0.84rem;
+  }
+  .video-viewport {
+    aspect-ratio: 4 / 3;
+  }
+  .video-controls {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* =====================================================================
+   v6 鋼琴頁擴充：中國全黑鍵高亮標記＋短音／長音切換與視覺呈現
+   ===================================================================== */
+.art-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  gap: 3px;
+}
+
+.art-btn {
+  border: none;
+  background: transparent;
+  color: #d6e2f2;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.art-btn:hover {
+  color: #ffffff;
+}
+
+.art-btn[data-art="short"].active {
+  background: linear-gradient(135deg, #6ce5ff 0%, #26a8d6 100%);
+  color: #06212e;
+  box-shadow: 0 2px 12px rgba(56, 200, 240, 0.45);
+}
+
+.art-btn[data-art="long"].active {
+  background: linear-gradient(135deg, #ffe28a 0%, #e09c2b 100%);
+  color: #241700;
+  box-shadow: 0 2px 12px rgba(234, 185, 84, 0.45);
+}
+
+/* 即時讀數內的短音／長音狀態標籤 */
+.readout-art {
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.25rem 0.68rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.readout-art.idle {
+  background: rgba(255, 255, 255, 0.12);
+  color: #c8d4e6;
+}
+
+.readout-art.short {
+  background: linear-gradient(135deg, #6ce5ff 0%, #24a4d4 100%);
+  color: #062230;
+  box-shadow: 0 0 12px rgba(84, 214, 248, 0.55);
+}
+
+.readout-art.long {
+  background: linear-gradient(135deg, #ffe494 0%, #e09c2b 100%);
+  color: #261800;
+  box-shadow: 0 0 12px rgba(234, 185, 84, 0.6);
+}
+
+/* 長短音即時視覺軌道 */
+.rhythm-strip {
+  background: rgba(8, 14, 23, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 0.6rem 0.85rem 0.7rem;
+  margin-bottom: 0.95rem;
+}
+
+.rhythm-strip-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #b4c4da;
+  margin-bottom: 0.48rem;
+}
+
+.rhythm-legend {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.r-chip {
+  padding: 0.14rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.r-chip.short {
+  background: rgba(84, 214, 248, 0.2);
+  color: #7ee9ff;
+  border: 1px solid rgba(84, 214, 248, 0.55);
+}
+
+.r-chip.long {
+  background: rgba(234, 185, 84, 0.2);
+  color: #ffe28c;
+  border: 1px solid rgba(234, 185, 84, 0.55);
+}
+
+.rhythm-track {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  min-height: 44px;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+
+.rhythm-placeholder {
+  font-size: 0.84rem;
+  color: #8295b0;
+}
+
+@keyframes blockPop {
+  0% { transform: scale(0.84); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rhythm-block {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 36px;
+  border-radius: 10px;
+  padding: 0 0.65rem;
+  flex-shrink: 0;
+  animation: blockPop 0.16s ease-out;
+  white-space: nowrap;
+}
+
+.rhythm-block.short {
+  min-width: 68px;
+  background: linear-gradient(135deg, rgba(84, 214, 248, 0.28) 0%, rgba(36, 164, 212, 0.42) 100%);
+  border: 1.5px solid #75e7ff;
+  color: #e6fbff;
+}
+
+.rhythm-block.long {
+  background: linear-gradient(90deg, rgba(246, 206, 98, 0.42) 0%, rgba(224, 152, 42, 0.28) 100%);
+  border: 1.5px solid #ffd875;
+  color: #fff6dc;
+  box-shadow: 0 0 14px rgba(234, 185, 84, 0.25);
+}
+
+.rb-tag {
+  font-size: 0.72rem;
+  font-weight: 900;
+  opacity: 0.92;
+}
+
+.rb-note {
+  font-size: 0.96rem;
+  font-weight: 900;
+}
+
+.rb-pitch {
+  font-size: 0.72rem;
+  font-family: "Consolas", monospace;
+  opacity: 0.82;
+}
+
+/* 27 鍵鋼琴調整：讓 16 白鍵與 11 黑鍵於寬螢幕一次完整展開，並讓中國全黑鍵標籤極度醒目 */
+.piano-keys {
+  height: 235px;
+  min-width: 820px;
+}
+
+.piano-black-key {
+  width: 3.9%;
+  height: 62%;
+  padding-bottom: 8px;
+}
+
+/* 中國全黑鍵五聲音階專屬高亮黑鍵框與金字標籤 */
+body.piano-page[data-theme="china"] .piano-black-key.in-scale {
+  background: linear-gradient(180deg, #4b4331 0%, #241f14 70%, #15120c 100%);
+  border-color: rgba(245, 205, 102, 0.72);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.55), inset 0 -4px 0 #0a0804, 0 0 10px rgba(234, 185, 84, 0.25);
+}
+
+body.piano-page[data-theme="china"] .piano-black-key .pk-scale-tag {
+  background: linear-gradient(180deg, #ffe799 0%, #eab954 100%);
+  color: #2c1a00;
+  border: 1px solid #fff6d4;
+  font-size: 0.78rem;
+  padding: 2px 5px;
+}
+
+/* 按鍵上的延音進度光條（長音時慢慢收縮，短音時快速閃爍） */
+.key-sustain-bar,
+.scale-sustain-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes drainHeight {
+  0% { transform: scaleX(1); opacity: 0.95; }
+  100% { transform: scaleX(0); opacity: 0.15; }
+}
+
+.piano-white-key.active.art-long .key-sustain-bar,
+.piano-black-key.active.art-long .key-sustain-bar {
+  height: 7px;
+  opacity: 1;
+  background: linear-gradient(90deg, #fff4be, #f2b73b);
+  transform-origin: left center;
+  animation: drainHeight var(--sustain-ms, 900ms) linear forwards;
+}
+
+.piano-white-key.active.art-short,
+.piano-black-key.active.art-short {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 22px rgba(108, 229, 255, 0.95) !important;
+}
+
+.piano-black-key.active.art-short {
+  background: linear-gradient(180deg, #7beaff 0%, #24a5d4 100%) !important;
+}
+
+.piano-white-key.active.art-short {
+  background: linear-gradient(180deg, #d8f8ff 0%, #6ce0fb 100%) !important;
+}
+
+.piano-black-key.active.art-long {
+  box-shadow: 0 0 0 2.5px #fff5cf, 0 0 26px rgba(248, 200, 82, 0.95) !important;
+}
+
+/* 下半部宮商角徵羽琴鍵的短音／長音視覺標記與延音條 */
+.scale-art-pill {
+  position: absolute;
+  top: 10px;
+  right: 7px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
+}
+
+.stage-key.active.art-short .scale-art-pill::after {
+  content: "⚡短音";
+}
+
+.stage-key.active.art-short .scale-art-pill {
+  opacity: 1;
+  background: #0b3c52;
+  color: #8cf0ff;
+}
+
+.stage-key.active.art-long .scale-art-pill::after {
+  content: "〰長音";
+}
+
+.stage-key.active.art-long .scale-art-pill {
+  opacity: 1;
+  background: rgba(36, 22, 0, 0.82);
+  color: #ffe699;
+}
+
+.stage-key.active.art-short {
+  background: linear-gradient(180deg, #dffaff 0%, #68dcf9 58%, #28aad6 100%) !important;
+  color: #052331 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(196, 246, 255, 0.92), 0 8px 24px rgba(72, 212, 248, 0.9) !important;
+}
+
+.stage-key.active.art-long .scale-sustain-bar {
+  height: 6px;
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.92);
+  transform-origin: left center;
+  animation: drainHeight var(--sustain-ms, 900ms) linear forwards;
+}
+
+@media (max-width: 820px) {
+  .piano-keys {
+    height: 195px;
+    min-width: 760px;
+  }
+}
+
+
+/* =====================================================================
+   v7 擴充：長短按感測 + 輔助對拍（±150ms）+ 純自動示範（Auto-Play）樣式
+   ===================================================================== */
+.stage-key,
+.piano-white-key,
+.piano-black-key {
+  touch-action: none;
+}
+
+.stage-pill.assist-btn {
+  background: rgba(24, 62, 68, 0.84);
+  color: #d6fff6;
+  border-color: rgba(114, 240, 210, 0.72);
+}
+
+.stage-pill.assist-btn:hover {
+  background: rgba(20, 82, 88, 0.94);
+}
+
+.stage-pill.assist-btn.active-mode {
+  background: linear-gradient(135deg, #5ef0c8 0%, #1ea684 100%);
+  color: #062820;
+  border-color: #e8fff9;
+  box-shadow: 0 0 0 3px rgba(130, 250, 218, 0.55), 0 6px 18px rgba(30, 166, 132, 0.45);
+}
+
+.stage-pill.auto-btn {
+  background: rgba(56, 44, 88, 0.84);
+  color: #efe6ff;
+  border-color: rgba(204, 178, 255, 0.75);
+}
+
+.stage-pill.auto-btn:hover {
+  background: rgba(74, 56, 118, 0.95);
+}
+
+.stage-pill.auto-btn.active-mode {
+  background: linear-gradient(135deg, #c69eff 0%, #8052e0 100%);
+  color: #ffffff;
+  border-color: #f4ebff;
+  box-shadow: 0 0 0 3px rgba(212, 184, 255, 0.55), 0 6px 18px rgba(128, 82, 224, 0.48);
+}
+
+/* 舞台頁極簡浮動對拍／按壓回饋條 */
+.stage-beat-hud {
+  position: fixed;
+  top: 70px;
+  left: 16px;
+  z-index: 28;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.44rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(14, 24, 34, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #f4f8fc;
+  font-size: 0.84rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+  max-width: calc(100vw - 32px);
+}
+
+.stage-beat-hud.hidden {
+  display: none;
+}
+
+/* 拍點脈動圓點 */
+.beat-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6eeec8;
+  flex-shrink: 0;
+  opacity: 0.45;
+  transform: scale(1);
+}
+
+@keyframes beatDotFlash {
+  0% { transform: scale(1.75); opacity: 1; box-shadow: 0 0 14px #7cffd8; }
+  100% { transform: scale(1); opacity: 0.45; box-shadow: none; }
+}
+
+.beat-pulse-dot.flash {
+  animation: beatDotFlash 0.24s ease-out;
+}
+
+/* 輔助對拍：即將到來拍點的目標按鍵輕柔呼吸提示框 */
+@keyframes nextHintGlow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(94, 240, 200, 0.7), 0 0 14px rgba(94, 240, 200, 0.45); }
+  50% { box-shadow: 0 0 0 4px rgba(154, 255, 228, 0.95), 0 0 22px rgba(94, 240, 200, 0.85); }
+}
+
+.stage-key.next-hint,
+.piano-white-key.next-hint,
+.piano-black-key.next-hint {
+  animation: nextHintGlow 0.65s ease-in-out infinite;
+  z-index: 7;
+}
+
+/* 正在按住按鍵時的即時按壓回饋狀態 */
+.stage-key.holding {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.r-chip.assist {
+  background: rgba(94, 240, 200, 0.2);
+  color: #82ffe0;
+  border: 1px solid rgba(94, 240, 200, 0.55);
+}
+
+.readout-art.assist {
+  background: linear-gradient(135deg, #6af0cb 0%, #1ea684 100%);
+  color: #04241c;
+  box-shadow: 0 0 12px rgba(94, 240, 200, 0.6);
+}
+
+.readout-art.holding {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.rhythm-block.holding-block {
+  min-width: 82px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px dashed rgba(255, 232, 160, 0.85);
+  color: #ffffff;
+  transition: min-width 0.08s linear;
+}
+
+.rhythm-block.assisted {
+  box-shadow: 0 0 0 1.5px rgba(114, 250, 214, 0.85), 0 0 14px rgba(94, 240, 200, 0.35);
+}
+
+.rb-ms {
+  font-size: 0.72rem;
+  font-family: "Consolas", monospace;
+  opacity: 0.88;
+}
+
+
+/* =====================================================================
+   v9 擴充：節拍量化吸附（Quantize Snapping）自訂 BPM、容錯範圍與錄製打譜介面
+   ===================================================================== */
+.stage-pill.settings-btn {
+  background: rgba(34, 46, 62, 0.8);
+  color: #edf4ff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.stage-pill.settings-btn.active-mode {
+  background: rgba(244, 248, 255, 0.94);
+  color: #162230;
+  border-color: #ffffff;
+}
+
+/* 舞台頁可收合毛玻璃設定卡 */
+.stage-quantize-panel {
+  position: fixed;
+  top: 68px;
+  left: 16px;
+  z-index: 32;
+  width: min(440px, calc(100vw - 32px));
+  padding: 0.95rem 1.05rem;
+  border-radius: 16px;
+  background: rgba(13, 22, 34, 0.88);
+  border: 1px solid rgba(114, 240, 210, 0.45);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.72rem;
+  color: #f0f6fc;
+}
+
+.stage-quantize-panel.hidden {
+  display: none;
+}
+
+.qp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.qp-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #d6e4f5;
+}
+
+.qp-label strong {
+  color: #79f7d6;
+  font-family: "Consolas", monospace;
+}
+
+.qp-label small {
+  color: #9bb0ca;
+  font-weight: 500;
+  margin-left: 0.25rem;
+}
+
+.qp-bpm-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.qp-bpm-controls input[type="range"],
+.quantize-toolbar input[type="range"] {
+  flex: 1;
+  min-width: 110px;
+  accent-color: #5ef0c8;
+  cursor: pointer;
+}
+
+.qp-preset-chips {
+  display: inline-flex;
+  gap: 0.32rem;
+  flex-wrap: wrap;
+}
+
+.qp-chip {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #dbe6f5;
+  padding: 0.24rem 0.56rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  font-family: "Consolas", monospace;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.qp-chip:hover {
+  border-color: #79f7d6;
+  color: #ffffff;
+}
+
+.qp-chip.active {
+  background: linear-gradient(135deg, #62f0ca 0%, #1ea684 100%);
+  color: #05261e;
+  border-color: #e4fff8;
+}
+
+.qp-actions-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.qp-action-btn {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.1);
+  color: #eef5ff;
+  padding: 0.36rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+
+.qp-action-btn:hover:not(:disabled) {
+  border-color: #eab954;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.qp-action-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.qp-action-btn.active {
+  background: rgba(234, 185, 84, 0.26);
+  border-color: #f4ca68;
+  color: #ffecba;
+}
+
+.qp-action-btn.rec.recording {
+  background: linear-gradient(135deg, #ff6b7a 0%, #d42c3e 100%);
+  border-color: #ffd6da;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(255, 86, 106, 0.65);
+}
+
+.qp-status {
+  font-size: 0.76rem;
+  color: #a9bed8;
+  line-height: 1.45;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.45rem;
+}
+
+/* 舞台 HUD 吸附／偏拍邊框區分 */
+.stage-beat-hud.hud-snapped {
+  border-color: rgba(94, 240, 200, 0.78);
+}
+
+.stage-beat-hud.hud-offbeat {
+  border-color: rgba(255, 168, 102, 0.82);
+}
+
+/* 鋼琴頁：精簡單列量化吸附控制列 */
+.quantize-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+  background: rgba(11, 20, 32, 0.72);
+  border: 1px solid rgba(114, 240, 210, 0.26);
+  border-radius: 14px;
+  padding: 0.58rem 0.9rem;
+  margin-bottom: 0.78rem;
+}
+
+.qt-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex-wrap: wrap;
+}
+
+.qt-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #b7c8df;
+  white-space: nowrap;
+}
+
+.qt-step-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.qt-step-btn:hover {
+  border-color: #79f7d6;
+  background: rgba(94, 240, 200, 0.22);
+}
+
+.qt-num {
+  min-width: 32px;
+  text-align: center;
+  font-family: "Consolas", monospace;
+  font-size: 0.95rem;
+  color: #79f7d6;
+}
+
+.qt-sub {
+  font-size: 0.73rem;
+  color: #93a9c4;
+  font-family: "Consolas", monospace;
+}
+
+.qt-rec-group {
+  margin-left: auto;
+}
+
+/* 偏拍未吸附狀態視覺標籤 */
+.r-chip.offbeat {
+  background: rgba(255, 146, 92, 0.2);
+  color: #ffc29c;
+  border: 1px solid rgba(255, 146, 92, 0.58);
+}
+
+.readout-art.offbeat {
+  background: linear-gradient(135deg, #ffae78 0%, #e06b34 100%);
+  color: #290e02;
+  box-shadow: 0 0 12px rgba(242, 128, 72, 0.55);
+}
+
+.rhythm-block.offbeat {
+  border-color: #ffad78 !important;
+  box-shadow: 0 0 0 1px rgba(255, 173, 120, 0.55);
+}
+
+@media (max-width: 720px) {
+  .qt-rec-group {
+    margin-left: 0;
+  }
+}
